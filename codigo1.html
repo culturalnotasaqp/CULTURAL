@@ -1,0 +1,620 @@
+<html lang="es"><script id="allow-copy_script" src="chrome-extension://aefehdhdciieocakfobpaaolhipkcpgc/content_scripts/copy.js"></script><head>
+    <meta charset="UTF-8">
+    
+    <meta http-equiv="Expires" content="0"> 
+    <meta http-equiv="Last-Modified" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a nuestro Portal Académico</title>
+    
+    <link href="https://portalacademico.cultural.edu.pe/cultural/css/css2.css" rel="stylesheet">
+    <link href="https://portalacademico.cultural.edu.pe/cultural/css/icon.css" rel="stylesheet">
+    <link href="https://portalacademico.cultural.edu.pe/cultural/css/login.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css">
+    <style>
+
+    #int_user::placeholder {
+        color: #223399; 
+        opacity: 1; 
+        font-family: 'Montserrat', sans-serif; 
+    }
+    #password_bd::placeholder{
+        color: #9C9C9C; 
+        opacity: 1; 
+        font-family: 'Montserrat', sans-serif; 
+    }
+    #btn_iniciar_sesion {
+            background-color: #223399; 
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+        }
+    
+        /* Cambiar color al pasar el mouse */
+        #btn_iniciar_sesion:hover {
+            background-color: #FF2328; /* Nuevo color al hacer hover */
+        }
+    #backbutton{
+      left:4%;
+      top:6%;
+      /*top:10.5%;*/
+    
+    }
+    @media  screen and (max-width: 768px) {
+        #backbutton {
+          top: 20px; /* Ajusta según el diseño en pantallas pequeñas */
+          width: 80px;
+          height: 50px;
+          left: 180;
+        }
+      }
+    .estudiante_button{
+      background-color: #32AD87;
+      border-color: #32AD87;
+    }
+    
+    .padre_button{
+      background-color:#E5BA5E;
+      border-color:#E5BA5E;
+    }
+    
+    .empresa_button{
+      background-color:#32AD87;
+      border-color:#32AD87;
+    }
+ 
+    
+    .registrate-button a {
+      color: white;
+      text-decoration: none;
+      width: 100%;
+      text-align: center;
+    }
+    
+    /* Pantallas pequeñas hasta 560px */
+    @media (max-width: 560px) {
+      .registrate-button {
+        padding: 12px 30px;
+        font-size: 16px;
+        min-width: 200px; /* Ancho mínimo en pantallas pequeñas */
+      }
+    }
+    
+    /* Entre 560px y 768px */
+    @media (min-width: 560px) and (max-width: 768px) {
+      .registrate-button {
+        padding: 14px 35px;
+        font-size: 18px;
+        width: 100%;
+      }
+    }
+    
+    /* Pantallas grandes desde 768px */
+    @media (min-width: 768px) {
+      .registrate-button {
+        padding: 15px 50px; /* Más padding para que el botón se vea más grande */
+        font-size: 20px;
+        max-width: 1050px; /* Mayor ancho máximo en pantallas grandes */
+      }
+    }
+    
+    /* Pantallas pequeñas hasta 560px */
+    @media (max-width: 560px) {
+      .registrate-button {
+        padding: 12px 30px;
+        font-size: 16px;
+        min-width: 200px; /* Ancho mínimo en pantallas pequeñas */
+      }
+    }
+    
+    /* Entre 560px y 768px */
+    @media (min-width: 560px) and (max-width: 768px) {
+      .registrate-button {
+        padding: 14px 35px;
+        font-size: 18px;
+        width: 100%;
+      }
+    }
+    #login{
+      display: none;
+    }
+    .login-title::after {
+                display:none;
+            }
+    .encabezado_login{
+      padding-bottom:20px!important;
+      margin-bottom:0px!important;
+    }
+    .card-body{
+      padding: 26px 36px;
+      border-radius:0px 0px 15px 15px;
+      transition: transform 0.3s ease;
+      transform-origin: top;
+    }
+    
+    .text-hover{
+      display:none;
+    }
+    
+    .div-ingresa{
+      margin-bottom: 10px;
+      transition: margin-top 0.3s ease;
+    }
+    
+    
+    
+    .card-body:hover{
+      background-color:#FF2328;
+      transform: scaleY(1.2);
+      /*transform: scaleY(4);*/
+      overflow: hidden;
+      cursor: pointer;
+    }
+    
+    .card-body:hover .div-ingresa{
+      /*transform: scaleY(1.1);*/
+      transform: scaleY(0.85);
+      margin-bottom: 0px;
+      margin-top:-15px;
+    }
+    
+    .card-body:hover .card-title{
+      color:#FFF!important;
+    }
+    
+    .card-body:hover .flecha path{
+      fill:#FFF;
+    }
+    
+    .card-body:hover .div-text{
+      transform: scaleY(0.85);
+    }
+    
+    .card-body:hover .flecha{
+      transform: scaleY(0.9);
+    }
+    
+    .card-body:hover .text-hover{
+      display:block;
+    }
+    
+    .custom-swal {
+      /*background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23f0e68c"/></svg>')*/
+      background-image: url("https://portalacademico.cultural.edu.pe/cultural/images/fondos/fondo-popup.png");
+      background-size: 100% 100%;
+      height: 450px;
+      /*font-family: 'Montserrat'; 
+      font-weight: 700; 
+      font-size: 0.9em;  
+      color: #223399;*/
+    }
+    
+    @media (max-width: 757px) {
+      .custom-swal {
+        height: auto;
+      }
+    }
+    
+    .custom-title-swal{
+      font-family: 'Montserrat'; 
+      font-weight: 700; 
+      font-size: 1.5em;
+      padding:0px 60px;  
+      color: #223399;
+    }
+    
+    .custom-content-swal{
+      margin-top:20px;
+      padding:0px 80px;
+    }
+    
+    .custom-confirm-button-swal{
+      padding:10.5px 75px;
+      font-family: 'Montserrat'; 
+      font-weight: 500; 
+      font-size: 0.9em!important;
+    }
+    
+    .custom-felicitaciones{
+      background-image: url("https://portalacademico.cultural.edu.pe/cultural/images/fondos/fondo-popup.png");
+      background-size: 100% 100%;
+      height: 450px;
+      width: 480px;
+    }
+    
+    .custom-felicitaciones-title-swal{
+      font-family: 'Montserrat'; 
+      font-weight: 700; 
+      font-size: 1.5em;
+      padding:0px 60px;  
+      color: #223399;
+    }
+    
+    .custom-felicitaciones-content-swal{
+      margin-top:20px;
+      padding:0px 80px;
+      font-family: 'Montserrat'; 
+      font-weight: 500; 
+      font-size: 1em;
+      color: #223399;
+    }
+    
+    .custom-felicitaciones-confirm-button-swal{
+      padding:10.5px 75px;
+      font-family: 'Montserrat'; 
+      font-weight: 500; 
+      font-size: 0.9em!important;
+    }
+    
+    .custom-felicitaciones-image{
+      margin-bottom:5px;
+      margin-top:0px;
+    }
+    
+    @media (max-width: 757px) {
+      #row-card-group{
+        display:flex;
+        flex-direction:column;
+      }
+      #row-card-group .card{
+        width:auto!important;
+        margin:10px!important;
+      }
+    }
+    .custom-swal-popup {
+       background-image: url("https://portalacademico.cultural.edu.pe/cultural/images/fondos/fondo-popup.png");
+        background-size: 100% 100%;
+        height: 450px;
+        width: 480px;
+        }
+        .swal-actions-custom {
+        margin-top: 100px; /* Ajusta el valor según el espacio que necesites */
+    }
+    .swal-confirm-button {
+        flex: 1 1 60%; /* Aumenta el ancho base al 60% */
+        max-width: 500px; /* Ajusta el max-width para un mayor ancho */
+        min-width: 150px; /* Aumenta el min-width para que no sea tan estrecho */
+        border-radius: 8px;
+        background-color: #223399 !important;
+        color: white; /* Establece el color del texto como blanco */
+        font-weight: bold; /* Opcional: agrega negrita al texto */
+        height: 50px; /* Establece la altura del botón */
+    }
+    </style>
+    <link rel="stylesheet" href="https://portalacademico.cultural.edu.pe/cultural/css/font-awesome.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="icon" href="https://portalacademico.cultural.edu.pe/cultural/images/logo_cultural.png" type="image/ico">
+    <!-- Navidad -->
+    
+    <!-- Navidad -->
+    </head>
+      <body style="background: url(https://portalacademico.cultural.edu.pe/cultural/images/background_login.png) no-repeat center center fixed;-webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;">
+      <div style="justify-content: center;
+      align-items: center;">
+        <section style="max-width:65rem;" id="login2" class="encabezado_login">
+          <div class="container" style="margin: auto;align-items: center;">
+            <div style="height:auto;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="199.575" height="40" viewBox="0 0 193.575 44">
+              <g id="Grupo_1561" data-name="Grupo 1561" transform="translate(-414.213 -43)">
+                <g id="Cultural-Logo" transform="translate(333.713 4.704)">
+                  <g id="Capa_1" transform="translate(80.5 38.296)">
+                    <g id="p30zzN" transform="translate(0 0)">
+                      <g id="Grupo_404" data-name="Grupo 404">
+                        <path id="Trazado_528" data-name="Trazado 528" d="M110.165,148.685a2.717,2.717,0,0,1-2.8-2.261c-.135-.646-.215-.7-.808-.458a112.566,112.566,0,0,1-12.41,4.28c-3.526,1.023-7.053,1.938-10.579,2.907a5.444,5.444,0,0,1-.915.162c-1.319.108-2.154-.431-2.154-2.046a5.791,5.791,0,0,1,4.334-5.491,206.7,206.7,0,0,0,25.142-8.318c1.319-.538,2.611-1.131,3.93-1.7.081-.027.162-.081.242-.108,2.019-.538,2.477.3,2.423,1.884a5.691,5.691,0,0,1-.565,2.18c-.861,1.938-1.507,3.984-2.477,5.9-.269.538-.538,1.077-.834,1.588a2.737,2.737,0,0,1-2.477,1.454h-.054Z" transform="translate(-80.5 -109.329)" fill="#fff"></path>
+                        <path id="Trazado_529" data-name="Trazado 529" d="M119.737,102.1a6.693,6.693,0,0,1-3.957,5.788c-3.284,1.507-6.622,2.853-10.014,4.092-3.93,1.427-7.914,2.665-11.925,3.822-2.423.673-4.819,1.373-7.241,2.046a4.684,4.684,0,0,1-1.211.162,1.761,1.761,0,0,1-1.615-1.346,3.509,3.509,0,0,1-.054-1.588,5.577,5.577,0,0,1,4.226-4.63c4.28-1.1,8.533-2.288,12.733-3.661,3.2-1.05,6.38-2.18,9.5-3.419,2.315-.942,4.6-1.884,6.864-2.934a4.319,4.319,0,0,1,.834-.269,1.384,1.384,0,0,1,1.8,1.211,6.6,6.6,0,0,1,.054.727Z" transform="translate(-82.804 -83.467)" fill="#fff"></path>
+                        <path id="Trazado_530" data-name="Trazado 530" d="M100.006,81.207c.431-.162.861-.323,1.319-.458a1.747,1.747,0,0,1,2.288,1.077,1.783,1.783,0,0,1-1.131,2.288c-1.615.592-3.23,1.184-4.845,1.75-2.907,1.023-5.841,2.019-8.8,2.934a1.795,1.795,0,0,1-1.588-3.2,27.913,27.913,0,0,0,2.288-1.7c-.35.054-.727.135-1.077.188a1.74,1.74,0,0,1-1.965-1.158,1.72,1.72,0,0,1,.754-2.127c.888-.511,1.8-1,2.665-1.561-.269.081-.511.162-.781.242a1.769,1.769,0,0,1-2.18-1.158,1.734,1.734,0,0,1,1.1-2.234c3.9-1.319,7.78-2.611,11.683-3.876a1.784,1.784,0,0,1,2.207.834,1.812,1.812,0,0,1-.565,2.342,16.4,16.4,0,0,0-1.642,1.427c.3-.108.592-.242.888-.35a1.8,1.8,0,0,1,1.615,3.2c-.781.511-1.561,1-2.342,1.507a.387.387,0,0,0,.054.081l.054-.054Z" transform="translate(-84.797 -63.009)" fill="#fff"></path>
+                        <path id="Trazado_531" data-name="Trazado 531" d="M168.41,39.481a2.589,2.589,0,0,1-1.131,2.154,33.926,33.926,0,0,1-6.407,3.392c-3.769,1.615-7.672,2.934-11.521,4.415-.565.215-.888,0-1-.565a2.41,2.41,0,0,1,1.588-2.853c3.123-1.184,6.272-2.342,9.395-3.553a34.862,34.862,0,0,0,7.107-3.5c.215-.162.458-.323.673-.485.538-.35.969-.215,1.131.4a3.512,3.512,0,0,1,.108.592h.054Z" transform="translate(-130.05 -38.296)" fill="#fff"></path>
+                        <path id="Trazado_532" data-name="Trazado 532" d="M151.9,66.761a2.213,2.213,0,0,1,1.615-2.342c3.015-1.211,6.084-2.288,9.1-3.446a36.171,36.171,0,0,0,6.811-3.311c.646-.431,1.05-.269,1.265.485a2.414,2.414,0,0,1-1.265,2.773,51.943,51.943,0,0,1-9.772,4.334c-2.154.781-4.307,1.561-6.407,2.45C152.219,68.134,151.869,67.891,151.9,66.761Z" transform="translate(-132.676 -52.277)" fill="#fff"></path>
+                        <path id="Trazado_533" data-name="Trazado 533" d="M155.4,86.8a2.24,2.24,0,0,1,1.615-2.342c3.392-1.238,6.757-2.53,10.148-3.8,1.507-.565,2.988-1.131,4.5-1.7.861-.323,1.319,0,1.346.942a2.307,2.307,0,0,1-1.534,2.315c-2.692,1.023-5.357,2.019-8.049,3.042-2.18.808-4.334,1.642-6.514,2.45H156.8c-1.05.377-1.4.162-1.4-.969h0Z" transform="translate(-135.238 -67.932)" fill="#fff"></path>
+                      </g>
+                    </g>
+                    <g id="Grupo_405" data-name="Grupo 405" transform="translate(45.412 8.831)">
+                      <path id="Trazado_534" data-name="Trazado 534" d="M266.213,77.2a8.084,8.084,0,0,0-5.868-2.692c-3.8,0-6.622,3.93-6.622,8.4s3.338,8.076,6.972,8.076,4.818-1.077,6.757-3.15l.808,3.446a12.758,12.758,0,0,1-8.21,3.123c-5.518,0-10.848-3.742-10.848-11.144s4.845-12.06,11.118-12.06,5.518.861,7.672,2.773l-1.777,3.2h0Z" transform="translate(-249.2 -71.173)" fill="#fff"></path>
+                      <path id="Trazado_535" data-name="Trazado 535" d="M340.921,76.246l-.458-3.446h4.307V86.206c0,5.626-3.742,9.422-9.637,9.422-8.56,0-8.776-7.968-8.776-8.533V76.273l-.458-3.446h4.818v14c0,3.338,2.154,5.518,5.034,5.518s5.2-2.423,5.2-5.761V76.273h0Z" transform="translate(-305.253 -72.342)" fill="#fff"></path>
+                      <path id="Trazado_536" data-name="Trazado 536" d="M409.658,76.246,409.2,72.8h4.818V91.778h8.533l-.835,3.392h-12.06V76.246Z" transform="translate(-366.13 -72.342)" fill="#fff"></path>
+                      <path id="Trazado_537" data-name="Trazado 537" d="M445.6,72.7h18.628v3.392h-7.241v16.1l.377,2.88h-4.711V76.092h-7.026V72.7h0Z" transform="translate(-392.731 -72.269)" fill="#fff"></path>
+                      <path id="Trazado_538" data-name="Trazado 538" d="M535.721,76.246l-.458-3.446h4.307V86.206c0,5.626-3.742,9.422-9.637,9.422-8.56,0-8.776-7.968-8.776-8.533V76.273l-.458-3.446h4.819v14c0,3.338,2.153,5.518,5.034,5.518s5.2-2.423,5.2-5.761V76.273h-.027Z" transform="translate(-447.615 -72.342)" fill="#fff"></path>
+                      <path id="Trazado_539" data-name="Trazado 539" d="M616.16,95.17l-5.572-7.914h-1.7v5.034l.377,2.88h-4.711V76.246L604.1,72.8h6.945c4.011,0,7.914,2.207,7.914,6.972s-1.7,5.249-4.226,6.541l6.945,8.883H616.16ZM610.4,84.079a4.229,4.229,0,0,0,3.984-4.307A3.849,3.849,0,0,0,610.4,75.9h-1.508v8.21H610.4Z" transform="translate(-508.564 -72.342)" fill="#fff"></path>
+                      <path id="Trazado_540" data-name="Trazado 540" d="M678.66,71.8l2.853-.7,6.837,18.655,1.884,4.146H685.39l-1.911-5.2h-7.4l-1.965,5.2H670.1l8.614-22.1Zm-1.534,13.486h5.357L680.168,78.8l-.3-1.319-.323,1.346-2.423,6.461Z" transform="translate(-556.798 -71.1)" fill="#fff"></path>
+                      <path id="Trazado_541" data-name="Trazado 541" d="M750.458,76.246,750,72.8h4.818V91.778h8.533l-.834,3.392h-12.06V76.246h0Z" transform="translate(-615.19 -72.342)" fill="#fff"></path>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+            </div>
+            <div style="position:relative;margin-top:30px;display:flex;justify-content:center;align-items:center;text-align:center">
+              <img id="login_icon_blue" src="https://portalacademico.cultural.edu.pe/cultural/images/logo_login.png" style="margin-right:10px;width: auto;height:2em!important;">
+              <h1 style="color:#FFFFFF;font-family: 'Montserrat';font-weight: 800;font-size:2em;">Portal Académico</h1>
+            </div>
+          </div>
+        </section>
+        <section id="login" class="loginform" style="z-index: 2; margin-top: 60px; display: none;">
+          <div class="container" id="c1">
+         
+            <div id="login_card" class="row" style="background-color:#FFFFFF;">
+              <div class="col-md-6 p-0">
+                <div id="registro" class="login-wrapper" style="padding: 0px 2rem;">
+                  <div class="login-logo">
+                    
+                    <img class="logouno" src="images/logo_CCPNA.png" alt="">
+                  </div>
+                  <div class="login-title" style="margin-bottom: 4.5em; display: flex; justify-content: center; align-items: center;  position:relative">
+                  <a id="backbutton" onclick="mostrarTipos()" class="btn" style="z-index:1; position:absolute; background-color:#223399; width: 90px; height: 60px; text-align: center; border-radius: 15px; left: 0px; top: 0px;">
+                    <img src="https://portalacademico.cultural.edu.pe/cultural/images/back_button.png" alt="Volver" style="width: 100%; height: 100%; border-radius: 15px;">
+                  </a>
+                   
+                  </div>
+                  <div class="login-title" style="margin-top: 1.3em; display: flex; justify-content: center; align-items: center; height: 100px; position:relative">
+                 
+                    <h2 style="color: #112277; font-family: 'Montserrat', sans-serif; font-size: 24px; margin: 0;">INICIAR SESIÓN</h2>
+                  </div>
+
+
+
+
+                      <form onsubmit="login(); return false;">
+                        <input type="text" id="dni" name="dni" placeholder="Usuario">
+                        <input type="password" id="password" name="password" placeholder="Contraseña">
+                        <button type="submit">Iniciar Sesión</button>
+                      </form>
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+              </div>
+              
+              <div id="login-img" class="col-md-6 p-0">
+                <div class="img-fit">
+                   <img width="320" height="240" src="https://portalacademico.cultural.edu.pe/cultural/images/DSC_0203.jpg">
+                </div>
+              </div>
+          
+            </div>
+          </div>
+          <br>
+
+
+
+        </section>
+        <section style="margin-top:20px;align-items: center;margin-bottom:60px;z-index:0;" id="tipo_usuario" class="tipousuario">
+        <div class="container" style="margin: auto;max-width:50rem;">
+        <h2 id="inicia_clases" style="color:#FFF;font-family: 'Montserrat';font-weight: 500;font-size:1.5em;text-align: center;">Selecciona tu tipo de Usuario</h2>
+        <br>
+            
+            <div class="card-group" id="row-card-group">
+              <div class="card" style="border-radius: 15px;width: 14.5rem;margin-right:18px;background: #FFF;border-width:0px;">
+                <img class="card-img-top" src="https://portalacademico.cultural.edu.pe/cultural/images/inicio_estudiante.png" style="border-radius:15px 15px 0px 0px;">
+                  <div class="card-body" onclick="mostrarLogin('estudiante');">
+                    <div class="div-ingresa">
+                      <div style="border-radius: 4px; background-color: #FF2328; height: 22px; text-align: left;display:inline-block;">
+                        <p style="color: #FFF; font-family: 'Montserrat'; font-weight: 600; font-size: 0.9em; margin: 0; padding: 0px 5px;">
+                          Ingresa como
+                        </p>
+                      </div>
+                    </div>
+                    <div class="div-text" style="text-align: left;">
+                      <h4 class="card-title" style="color: #223399; font-family: 'Montserrat'; font-weight: 700; display: inline-block; margin: 0;">
+                        Estudiante
+                      </h4>
+                    
+                      <p class="text-hover" style="position:absolute;color: #FFF; font-family: 'Montserrat'; font-weight: 400; font-size: 0.8em;">Matricúlate tú mismo, realiza la compra de tus libros, ve tus notas y detalles de tu curso.</p>
+                    </div>
+                  </div>
+                
+              </div> 
+          
+              <div class="card" style="border-radius: 15px;width: 13.5rem;margin-left:18px;background: #FFF;border-width:0px;">
+                <img class="card-img-top" src="https://portalacademico.cultural.edu.pe/cultural/images/inicio_empresa.png" style="border-radius:15px 15px 0px 0px;">
+                <div class="card-body" onclick="mostrarLogin('empresa');">
+                  <div class="div-ingresa">
+                    <div style="border-radius: 4px; background-color: #FF2328; height: 22px; text-align: left;display:inline-block;">
+                      <p style="color: #FFF; font-family: 'Montserrat'; font-weight: 600; font-size: 0.9em; margin: 0; padding: 0px 5px;">
+                        Ingresa como
+                      </p>
+                    </div>
+                  </div>
+                  <div class="div-text" style="text-align: left;">
+                    <h4 class="card-title" style="color: #223399; font-family: 'Montserrat'; font-weight: 700; display: inline-block; margin: 0;">
+                      Empresa
+                    </h4>
+                    <svg class="flecha" xmlns="http://www.w3.org/2000/svg" width="20.308" height="19.426" viewBox="0 0 26.308 25.426" style="vertical-align: middle;margin-bottom:9px; margin-left: 10px;">
+                      <path id="Trazado_468" data-name="Trazado 468" d="M5008.014-72.284c.006-.013.009-.026.014-.04a3,3,0,0,0,.157-.529c0-.01,0-.02,0-.03a3.08,3.08,0,0,0,.053-.561h0a3.076,3.076,0,0,0-.053-.561.3.3,0,0,1,0-.03,3.019,3.019,0,0,0-.157-.529c0-.013-.008-.027-.014-.04a3.158,3.158,0,0,0-.26-.494l-.021-.034a3.1,3.1,0,0,0-.383-.469l-9.663-9.663a3.051,3.051,0,0,0-4.314,0,3.051,3.051,0,0,0,0,4.314l4.456,4.456h-12.844a3.051,3.051,0,0,0-3.05,3.05,3.051,3.051,0,0,0,3.05,3.05h12.844l-4.456,4.456a3.051,3.051,0,0,0,0,4.314,3.051,3.051,0,0,0,4.314,0l9.663-9.663a3.083,3.083,0,0,0,.383-.469l.021-.033A3.12,3.12,0,0,0,5008.014-72.284Z" transform="translate(-4981.935 86.157)" fill="#239"></path>
+                    </svg>
+                    <p class="text-hover" style="position:absolute;color: #FFF; font-family: 'Montserrat'; font-weight: 400; font-size: 0.8em;">Matricula y gestiona a tus trabajadores asociados.</p>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+      
+
+        
+        <script type="text/javascript" src="https://portalacademico.cultural.edu.pe/cultural/js/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript" src="https://portalacademico.cultural.edu.pe/cultural/js/login.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script>
+            // Verifica si la alerta existe en la sesión
+                </script>
+        <script type="text/javascript">
+          var popStringEstudiante = "";
+          popStringEstudiante = popStringEstudiante + ////////////////////////
+          <div class="media">
+    
+          
+  
+    
+          var popStringEmpresa = "";
+   
+    
+          document.getElementById('estudiante').setAttribute('data-bs-content', popStringEstudiante);  
+          document.getElementById('estudiante-columna').setAttribute('data-bs-content', popStringEstudiante);  
+          document.getElementById('padre').setAttribute('data-bs-content', popStringPadre); 
+          document.getElementById('padre-columna').setAttribute('data-bs-content', popStringPadre); 
+          document.getElementById('empresa').setAttribute('data-bs-content', popStringEmpresa);
+          document.getElementById('empresa-columna').setAttribute('data-bs-content', popStringEmpresa);
+    
+          $(document).ready(function() {
+            $('[data-bs-toggle="popover"]').popover();
+            //document.getElementById('estudiante_button').addEventListener("click", mostrarLogin('estudiante'));
+            //document.getElementById('estudiante_button').onclick = function() { console.log("shit"); };
+          });
+    
+          $('#estudiante').on('shown.bs.popover', function () {
+    
+            var btn = document.getElementById('estudiante_button');
+            btn.onclick = function() { 
+              //mostrarAlerta();
+              $(".tipousuario").fadeOut();
+              $(".loginform").fadeIn();
+              $('[data-bs-toggle="popover"]').popover('hide');
+              document.getElementById('tusuario').value = "estudiante";
+              document.getElementById('ruc-field').hidden = "hidden";
+              document.getElementById('documento-field').hidden = "";
+            };
+    
+          });
+    
+    
+          $('#estudiante-columna').on('shown.bs.popover', function () {
+    
+            var btn = document.getElementById('estudiante_button');
+            btn.onclick = function() { 
+              //mostrarAlerta();
+              $(".tipousuario").fadeOut();
+              $(".loginform").fadeIn();
+              $('[data-bs-toggle="popover"]').popover('hide');
+              document.getElementById('tusuario').value = "estudiante";
+              document.getElementById('ruc-field').hidden = "hidden";
+              document.getElementById('documento-field').hidden = "";
+            };
+    
+          });
+    
+      
+    
+    
+    
+
+    
+        </script>
+        <script type="text/javascript">
+     
+        function mostrarPassword(){
+            var cambio = document.getElementById("password_bd");
+            if(cambio.type == "password"){
+              cambio.type = "text";
+              $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+            }else{
+              cambio.type = "password";
+              $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+            }
+          } 
+          
+          $(document).ready(function () {
+            var tusuario = document.getElementById('tusuario').value;
+            console.log(tusuario);
+            if(tusuario !='estudiante' && tusuario != 'empresa' && tusuario != 'padre_apoderado'){
+              $(".loginform").hide();
+            }
+            else{
+              $(".tipousuario").hide();
+              $(".loginform").fadeIn();
+              if(tusuario == 'empresa'){
+                document.getElementById('ruc-field').hidden = "";
+                document.getElementById('documento-field').hidden = "hidden";
+              }
+            }
+          //CheckBox mostrar contraseña
+          $('#ShowPassword').click(function () {
+            $('#Password').attr('type', $(this).is(':checked') ? 'text' : 'password');
+          });
+        });
+        
+        function mostrarLogin(tipo){//muestrael loginpe
+          //$(".tipousuario").fadeOut();
+          document.getElementById('tipo_usuario').style.display="none";
+          $(".loginform").fadeIn();
+          document.getElementById('tusuario').value = tipo;
+          if(tipo=="empresa"){
+            document.getElementById('ruc-field').hidden = "";
+            document.getElementById('documento-field').hidden = "hidden";
+          }
+          else{
+            document.getElementById('ruc-field').hidden = "hidden";
+            document.getElementById('documento-field').hidden = "";
+          }
+        }
+
+
+        
+        function mostrarTipos(){
+          $(".tipousuario").fadeIn();
+          $(".loginform").fadeOut();
+        }
+    
+  
+        document.addEventListener('DOMContentLoaded', function() {
+           
+    
+              });
+        </script>
+
+
+        
+
+
+
+        <script>
+  function login() {
+    const dni = document.getElementById("dni").value;
+    const password = document.getElementById("password").value;
+
+    const validDni = "76203309";
+    const validPass = "lacasaverde";
+
+    if (dni === validDni && password === validPass) {
+      // Redirige al archivo de notas
+      window.location.href = "codigo2.html";
+    } else {
+      alert("DNI o contraseña incorrectos");
+    }
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    </div></body></html>
